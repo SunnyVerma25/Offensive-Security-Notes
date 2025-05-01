@@ -30,7 +30,7 @@ Alternatively, you can find the majority of SQL injection vulnerabilities quickl
 
 ### The WHERE clause:
 
-<figure><img src="../../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
 
 The WHERE clause is used to extract data for specific conditions. A combination of SELECT and WHERE clauses is used to extract data from a large database, as shown in the image above.&#x20;
 
