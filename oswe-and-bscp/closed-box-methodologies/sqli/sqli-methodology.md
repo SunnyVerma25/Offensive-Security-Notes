@@ -8,7 +8,7 @@ description: >-
 
 ### **Injecting into String Data:**
 
-1. **Confirm that the application is interacting with the database ->** This can be done with the help of the % character. The % character is a wild-card character in SQL and if inserted into a database query may return a large list of results (based on the overall data present in the database). Anyways, once it's confirmed that the specific parameter in which the % character is injected returns a lot of results, we can start testing the specific parameter for SQL-Injection vulnerabilities.
+1. **Confirm that the application is interacting with the database ->** This can be done with the help of the <mark style="color:yellow;">`%`</mark> character. The <mark style="color:yellow;">`%`</mark> character is a wild-card character in SQL and if inserted into a database query may return a large list of results (based on the overall data present in the database). Anyways, once it's confirmed that the specific parameter in which the <mark style="color:yellow;">`%`</mark> character is injected returns a lot of results, we can start testing the specific parameter for SQL-Injection vulnerabilities.
 
 &#x20;
 
@@ -21,3 +21,12 @@ description: >-
 <mark style="color:yellow;">`' || NULL || '`</mark> -> This means that NULL is being concatenated with rest of the output from the other SQL queries in the context. Anything concatenated with NULL will return the same thing, thus not affecting the output in any fashion, but still telling us that SQL query injected was successfully executed, thereby confirming that SQL queries are being injected for this parameter. &#x20;
 
 ### **Injecting into Integer Data:**
+
+**If numerical data is being transmitted to the database by the application, chances are that this numerical value is being transmitted as it is, and is not being transmitted into a string. As a result, it is advised that we perform the above-mentioned attacks to confirm the presence of SQLi but along with that, also perform the following steps:**
+
+1. **Submit a mathematical expression:** If there's a parameter that accepts numerical value <mark style="color:yellow;">`2004`</mark>, try injecting <mark style="color:yellow;">`2006-2`</mark> or <mark style="color:yellow;">`2000+4`</mark>, and check if the response returned by the application is the same that is returned when <mark style="color:yellow;">`2004`</mark> is injected into the parameter. If the response returned is the same, than the parameter may be vulnerable
+
+<figure><img src="../../../.gitbook/assets/image (120).png" alt=""><figcaption><p>The year requested is 2004</p></figcaption></figure>
+
+<figure><img src="../../../.gitbook/assets/image (119).png" alt=""><figcaption><p>Th year requested is 2006-2 (which is 2004), and the database does resolve it and returns the result for 2004</p></figcaption></figure>
+
