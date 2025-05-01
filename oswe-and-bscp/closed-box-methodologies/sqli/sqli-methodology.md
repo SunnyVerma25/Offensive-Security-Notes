@@ -12,7 +12,7 @@ description: >-
 
 &#x20;
 
-2. **Prove that the vulnerable query parameter exists** -> This can be tested by a single quote to break out of the SQL query that the application will have constructed to request data from the DB. Observe for any noticeable changes in the application response, whether it being an error that is returned, or if the results differs from the original result. (Look out for 500 ISEs, or any other error that appears to be related to a broken SQL query (not an error like "product not found")). Then, we inject another single quote to complete the query started by the first single quote character we injected, and look to see if we are getting the same results that we would get without injecting the single quote. But better option is to use a payload such as " <mark style="color:yellow;">`' || (SELECT '') || '`</mark> " to confirm whether the application attempts to resolve the SQL query injected into the parameter, or is the error being caused by something else. Also try to use the " <mark style="color:yellow;">`' || (SELECT '' FROM dual) || '`</mark> " to check if the DB is Oracle or Postgres
+2. **Prove that the vulnerable query parameter exists** -> This can be tested by a single quote to break out of the SQL query that the application will have constructed to request data from the DB. Observe for any noticeable changes in the application response, whether it being an error that is returned, or if the results differs from the original result. (Look out for 500 ISEs, or any other error that appears to be related to a broken SQL query (not an error like "product not found")). Then, we inject another single quote to complete the query started by the first single quote character we injected, and look to see if we are getting the same results that we would get without injecting the single quote. Then, to validate the SQLi vulnerability, an option is to use concatenation characters in SQL, such as a payload that is " <mark style="color:yellow;">`' || (SELECT '') || '`</mark> " to confirm whether the application attempts to resolve the SQL query injected into the parameter, or is the error being caused by something else. Also try to use the " <mark style="color:yellow;">`' || (SELECT '' FROM dual) || '`</mark> " to check if the DB is Oracle or Postgres
 
 <mark style="color:yellow;">`(SELECT '')`</mark> -> This payload will return a 'NULL' value
 
@@ -20,4 +20,4 @@ description: >-
 
 <mark style="color:yellow;">`' || NULL || '`</mark> -> This means that NULL is being concatenated with rest of the output from the other SQL queries in the context. Anything concatenated with NULL will return the same thing, thus not affecting the output in any fashion, but still telling us that SQL query injected was successfully executed, thereby confirming that SQL queries are being injected for this parameter. &#x20;
 
-2.
+### **Injecting into Integer Data:**
