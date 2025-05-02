@@ -38,12 +38,18 @@ description: >-
 
 Edge cases:&#x20;
 
-1. sort keyword: If in an application, the user is able to supply a user-controlled input to determine how the results should be sorted (in ascending or descending order), it may open up the attack surface for SQLi, especially that the application allows the user to supply the sort order keyword (ASC or DESC). Imagine that we have a bookstore on which users can fetch books belonging to different genre and can be viewed based on prices. Chances are that the SQL query may look like:
+1. sort keyword: If in an application, the user is able to supply a user-controlled input to determine how the results should be sorted (in ascending or descending order), it may open up the attack surface for SQLi, especially that the application allows the user to supply the sort order keyword (ASC or DESC). Imagine that we have a bookstore on which users can fetch books belonging to different genre and can be viewed based on prices.&#x20;
+
+<figure><img src="../../../.gitbook/assets/image (122).png" alt=""><figcaption></figcaption></figure>
+
+Chances are that the SQL query may look like:
 
 <mark style="color:yellow;">`SELECT name,title,price FROM bookstore WHERE genre = 'Thriller' ORDER BY price asc;`</mark>
 
-Now, if this price and the asc keywords are user-supplied (seen in many application, the price and the asc keywords will be directly added to the ORDER BY clause (in the case of a vulnerable app). As such, an attacker can instead supply a SQLi payload such as the following:&#x20;
+Now, if this price and the asc keywords are user-supplied (seen in many applications, and the screenshot above), then the price and the asc keywords will be directly added to the ORDER BY clause (in the case of a vulnerable app). As such, an attacker can instead supply a SQLi payload such as the following:&#x20;
 
-<mark style="color:yellow;">`SELECT name,title,price FROM bookstore WHERE genre = 'Thriller' ORDER BY price'--`</mark>
+<figure><img src="../../../.gitbook/assets/image (123).png" alt=""><figcaption></figcaption></figure>
 
-Thereby breaking the SQL query and causing an error.
+<mark style="color:yellow;">`SELECT name,title,price FROM bookstore WHERE genre = 'Thriller' ORDER BY price';--`</mark>
+
+Thereby breaking the SQL query and causing an error (since there will be an extra single-quote character that is not required).
