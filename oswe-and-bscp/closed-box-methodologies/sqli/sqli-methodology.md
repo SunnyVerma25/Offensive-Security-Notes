@@ -6,7 +6,7 @@ description: >-
 
 # SQLi Methodology
 
-### **Injecting into String Data:**
+## **Injecting into String Data:**
 
 1. **Confirm that the application is interacting with the database ->** This can be done with the help of the <mark style="color:yellow;">`%`</mark> character. The <mark style="color:yellow;">`%`</mark> character is a wild-card character in SQL and if inserted into a database query may return a large list of results (based on the overall data present in the database). Anyways, once it's confirmed that the specific parameter in which the <mark style="color:yellow;">`%`</mark> character is injected returns a lot of results, we can start testing the specific parameter for SQL-Injection vulnerabilities.
 
@@ -20,7 +20,7 @@ description: >-
 
 <mark style="color:yellow;">`' || NULL || '`</mark> -> This means that NULL is being concatenated with rest of the output from the other SQL queries in the context. Anything concatenated with NULL will return the same thing, thus not affecting the output in any fashion, but still telling us that SQL query injected was successfully executed, thereby confirming that SQL queries are being injected for this parameter. &#x20;
 
-### **Injecting into Integer Data:**
+## **Injecting into Integer Data:**
 
 **If numerical data is being transmitted to the database by the application, chances are that this numerical value is being transmitted as it is, and is not being transmitted into a string. As a result, it is advised that we perform the above-mentioned attacks to confirm the presence of SQLi but along with that, also perform the following steps:**
 
@@ -36,9 +36,9 @@ description: >-
 
 <figure><img src="../../../.gitbook/assets/image (1) (1).png" alt=""><figcaption><p>The empId solves the arithmetic expression involving the SQL ASCII method</p></figcaption></figure>
 
-Edge cases:&#x20;
+## Edge cases:&#x20;
 
-1. sort keyword: If in an application, the user is able to supply a user-controlled input to determine how the results should be sorted (in ascending or descending order), it may open up the attack surface for SQLi, especially that the application allows the user to supply the sort order keyword (ASC or DESC). Imagine that we have a bookstore on which users can fetch books belonging to different genre and can be viewed based on prices.&#x20;
+1. **sort keyword**: If in an application, the user is able to supply a user-controlled input to determine how the results should be sorted (in ascending or descending order), it may open up the attack surface for SQLi, especially that the application allows the user to supply the sort order keyword (ASC or DESC). Imagine that we have a bookstore on which users can fetch books belonging to different genre and can be viewed based on prices.&#x20;
 
 <figure><img src="../../../.gitbook/assets/image (122).png" alt=""><figcaption></figcaption></figure>
 
@@ -56,7 +56,8 @@ Thereby breaking the SQL query and causing an error (since there will be an extr
 
 For blind-sqli, we can use a time-based injection with the following payload:
 
-<mark style="color:yellow;">`(CASE WHEN 1=1 THEN pg_sleep(5) ELSE price)`</mark>
+<mark style="color:yellow;">`(CASE WHEN 1=1 THEN pg_sleep(5) ELSE price END)`</mark>
 
 <figure><img src="../../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
+The query becomes <mark style="color:yellow;">`SELECT name,title,price FROM bookstore WHERE genre = 'Thriller' ORDER BY (CASE WHEN 1=1 THEN pg_sleep(5) ELSE price END)`</mark>&#x20;
