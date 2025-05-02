@@ -32,9 +32,9 @@ description: >-
 
 2. **Submit an expression containing SQL methods in it to analyze if the expression is being resolved**: If the above case resolves properly, try injecting a payload that contains a SQL method, and observe if the result is the same. For example, a common SQL method is ASCII(), which can be used to convert the value of the character to it's ASCII value. So, in the below example. we can use the payload 1+ASCII(1) to retrieve the details for the user Clark, since Clark's empId = 50 and ASCII(1)=49.&#x20;
 
-<figure><img src="../../../.gitbook/assets/image.png" alt=""><figcaption><p>The original database</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1).png" alt=""><figcaption><p>The original database</p></figcaption></figure>
 
-<figure><img src="../../../.gitbook/assets/image (1).png" alt=""><figcaption><p>The empId solves the arithmetic expression involving the SQL ASCII method</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1).png" alt=""><figcaption><p>The empId solves the arithmetic expression involving the SQL ASCII method</p></figcaption></figure>
 
 Edge cases:&#x20;
 
@@ -53,3 +53,10 @@ Now, if this price and the asc keywords are user-supplied (seen in many applicat
 <mark style="color:yellow;">`SELECT name,title,price FROM bookstore WHERE genre = 'Thriller' ORDER BY price';--`</mark>
 
 Thereby breaking the SQL query and causing an error (since there will be an extra single-quote character that is not required).
+
+For blind-sqli, we can use a time-based injection with the following payload:
+
+<mark style="color:yellow;">`(CASE WHEN 1=1 THEN pg_sleep(5) ELSE price)`</mark>
+
+<figure><img src="../../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+

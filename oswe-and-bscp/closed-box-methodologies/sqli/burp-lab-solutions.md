@@ -10,7 +10,7 @@ description: Burp Lab Solutions with walkthrough and understanding
 
 Lab description mentions that the vulnerability lies in the "category" parameter, as the user can select products from different categories.&#x20;
 
-<figure><img src="../../../.gitbook/assets/image (1) (1).png" alt=""><figcaption><p>The vulnerable application</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption><p>The vulnerable application</p></figcaption></figure>
 
 The vulnerable request looks like:&#x20;
 
