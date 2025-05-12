@@ -62,11 +62,13 @@ For blind-sqli, we can use a time-based injection with the following payload:
 
 The query becomes <mark style="color:yellow;">`SELECT name,title,price FROM bookstore WHERE genre = 'Thriller' ORDER BY (CASE WHEN 1=1 THEN pg_sleep(5) ELSE price END)`</mark>&#x20;
 
-## Fingerprinting Database
+***
+
+## Fingerprinting Database Information
 
 While there's the classic way of injecting queries such as @@VERSION or other similar queries to identify the exact database we are dealing with in the application, there maybe cases where these strings are not working as expected. As such, we have alternative ways of confirming at least the database type by performing the following actions:&#x20;
 
-Injecting into strings:&#x20;
+### Injecting into strings:&#x20;
 
 Each database-type handles concatenating strings differently. Here's an example to explain things:
 
@@ -81,3 +83,4 @@ Now, if we perform the following query, we will get information for the user 'Cl
 <figure><img src="../../../.gitbook/assets/image (126).png" alt=""><figcaption></figcaption></figure>
 
 However, if we inject the following query, we also get the results for the user&#x20;
+
