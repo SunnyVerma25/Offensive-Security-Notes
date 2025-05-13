@@ -82,5 +82,12 @@ Now, if we perform the following query, we will get information for the user 'Cl
 
 <figure><img src="../../../.gitbook/assets/image (126).png" alt=""><figcaption></figcaption></figure>
 
-However, if we inject the following query, we also get the results for the user&#x20;
+However, if we inject the following query, we also get the results for the user Clark.&#x20;
 
+<mark style="color:yellow;">`SELECT * FROM EMPLOYEE WHERE name='Cla' 'rk';`</mark>
+
+<figure><img src="../../../.gitbook/assets/image (127).png" alt=""><figcaption></figcaption></figure>
+
+Hence, we can use this technique when testing parameter values to confirm which database may be being used by the application. One case would be to use the normal string (clark in our case) to observe the results. Then, use different iterations of clark (such as 'cla' 'rk', 'cla''rk', 'cla' || 'rk') etc to determine which iteration returns a similar result. That may help determine the correct database. Since we are using MySQL, using a payload such as 'cla''rk' (notice the missing space) will not yield the right result
+
+<figure><img src="../../../.gitbook/assets/image (128).png" alt=""><figcaption></figcaption></figure>
