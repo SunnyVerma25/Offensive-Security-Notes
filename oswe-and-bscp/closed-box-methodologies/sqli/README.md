@@ -6,7 +6,7 @@ description: >-
 
 # SQLi
 
-### <mark style="color:yellow;">The theory of SQLi: What really is injection?</mark>&#x20;
+<mark style="color:yellow;">The theory of SQLi: What really is injection?</mark>&#x20;
 
 There are two types of languages that can be used to create programs to interact with computers. There are interpreted languages, and then comes compiled languages. Interpreted languages use a run-time component that takes the code of the language, along with any input if provided by the user, interprets this code into machine-readable language and then executes it at runtime. All of the above happens at run-time, not before the run-time. On the other hand, for compiled languages, all the code that is written gets generated into machine-readable code at the time of writing, and then is directly processed by processor at run-time.&#x20;
 
@@ -75,6 +75,8 @@ TLDR: Higher chances of false positives being detected due to usage of OR 1=1, a
 
 ### <mark style="color:yellow;">ORDER BY and UNION Operators</mark>
 
+#### ORDER BY
+
 A lot of times, databases are not ordered at all. As a result, we can use the ORDER BY clause to arrange the databases based on values in the column. For example, look at the following image, and observe how the database is not ordered at all:
 
 <figure><img src="../../../.gitbook/assets/image (20).png" alt=""><figcaption><p>Apart from Id, everything else is scrambled and not in a order. Title's don't have an order, neither do Director, Year or Length_Minutes</p></figcaption></figure>
@@ -93,11 +95,27 @@ This ORDER BY will be used as a part of SQLi attacks as well (UNION attacks), bu
 
 <figure><img src="../../../.gitbook/assets/image (23).png" alt=""><figcaption><p>ORDER BY 6 returns an error, indicating that the number of columns is 5</p></figcaption></figure>
 
-UNION operator can be used to append the output of one SQL query to another SQL query, depending on the conditions that the amount of columns that are returned as a result of the queries are the same, and the data type returned from each column is also the same. For example, you cannot append a column containing integer to a column containing string data.&#x20;
+#### UNION
 
-<figure><img src="../../../.gitbook/assets/image (24).png" alt=""><figcaption><p>One SQL query is appended to another SQL query!</p></figcaption></figure>
+UNION operator can be used to append the output of one SQL query to another SQL query, depending on the conditions that the amount of columns that are returned as a result of the queries are the same, and the data type returned from each column is also the same. For example, you cannot append a column containing integer to a column containing string data. Both of these points are explained with the following example:
 
-This UNION operator can be used in a broader SQLi attack known as <mark style="color:yellow;">SQLi UNION</mark> attacks. &#x20;
+Assume we have 2 databases named EMPLOYEE and CREDS being used by the application. EMPLOYEE contains employee name, employee ID and the department they work in. CREDS contains employee ID, employee name, and their password.&#x20;
+
+<figure><img src="../../../.gitbook/assets/image (131).png" alt=""><figcaption></figcaption></figure>
+
+<figure><img src="../../../.gitbook/assets/image (132).png" alt=""><figcaption></figcaption></figure>
+
+Now, let's use the UNION keyword to return information from both tables:
+
+<mark style="color:yellow;">`SELECT empId,name,dept FROM EMPLOYEE UNION SELECT empId,username,password FROM CREDS;`</mark>
+
+Of course, the above query is generated because we know what columns and tables exist. The output is as follows:
+
+<figure><img src="../../../.gitbook/assets/image (133).png" alt=""><figcaption></figcaption></figure>
+
+
+
+Thus, the UNION operator can be used in a broader SQLi attack known as <mark style="color:yellow;">SQLi UNION</mark> attacks.  However, things to keep in mind is that _<mark style="color:yellow;">**UNION Injection attacks are only possible in the case of a SELECT statement**</mark>_ (such as a request to retrieve some data). It is not possible to use UNION payloads for INSERT/UPDATE/DELETE statements, since UNION is defined in SQL as the means to combine result sets from SELECT queries.&#x20;
 
 ***
 
