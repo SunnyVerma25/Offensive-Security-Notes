@@ -91,3 +91,33 @@ However, if we inject the following query, we also get the results for the user 
 Hence, we can use this technique when testing parameter values to confirm which database may be being used by the application. One case would be to use the normal string (clark in our case) to observe the results. Then, use different iterations of clark (such as 'cla' 'rk', 'cla''rk', 'cla' || 'rk') etc to determine which iteration returns a similar result. That may help determine the correct database. Since we are using MySQL, using a payload such as 'cla''rk' (notice the missing space) will not yield the right result
 
 <figure><img src="../../../.gitbook/assets/image (128).png" alt=""><figcaption></figcaption></figure>
+
+Some other payloads based on different DB systems are:
+
+**MySQL**: <mark style="color:yellow;">`'cla' 'rk'`</mark>
+
+**Oracle**: <mark style="color:yellow;">`'cla'||'rk'`</mark>
+
+**MS-SQL**: <mark style="color:yellow;">`'cla'+'rk'`</mark>
+
+### Injecting into numeric data:
+
+Similar to the above example, some neat tricks that can be used to enumerate the type of database that the application is using involve supplying a payload that resolves to 0 via the input fields. For example, let's consider a modified database such as the following:
+
+<figure><img src="../../../.gitbook/assets/image (129).png" alt=""><figcaption></figcaption></figure>
+
+Observe that there's a new employee, with employee ID set to 0, and the name set to Administrator. Now, we can use the following payload (which resolves to 0) to enumerate that we are indeed using a MySQL database:
+
+<mark style="color:yellow;">`SELECT * FROM EMPLOYEE WHERE empId='CONNECTION_ID()-CONNECTION_ID()';`</mark>
+
+<figure><img src="../../../.gitbook/assets/image (130).png" alt=""><figcaption></figcaption></figure>
+
+Some other payloads based on different DB systems are:
+
+**MySQL**: <mark style="color:yellow;">`CONNECTION_ID()-CONNECTION_ID()`</mark>
+
+**Oracle**: <mark style="color:yellow;">`BITAND(1,1) - BITAND(1,1)`</mark>
+
+**MS-SQL**: <mark style="color:yellow;">`@@PACK_RECEIVED-@@PACK_RECEIVED`</mark>&#x20;
+
+***
