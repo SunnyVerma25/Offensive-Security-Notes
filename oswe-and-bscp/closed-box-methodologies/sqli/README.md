@@ -30,7 +30,7 @@ Alternatively, you can find the majority of SQL injection vulnerabilities quickl
 
 ### The WHERE clause:
 
-<figure><img src="../../../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 The WHERE clause is used to extract data for specific conditions. A combination of SELECT and WHERE clauses is used to extract data from a large database, as shown in the image above.&#x20;
 
@@ -113,7 +113,15 @@ Of course, the above query is generated because we know what columns and tables 
 
 <figure><img src="../../../.gitbook/assets/image (133).png" alt=""><figcaption></figcaption></figure>
 
+Now, here's the reason why we have a few conditions that are required to be able to perform a UNION based SQLi attack:
 
+1. Condition 1 states that both SQL queries should return the same amount of columns. The reason behind this is that when we use the UNION operator, the SQL database concatenates the data returned from the individual SQL queries one after the another. If the first query is requesting information for 3 columns, while the second (injected) query returns information for 2 columns, then this data cannot be concatenated/appended to the data returned from the first query, and as a result we will get an error.&#x20;
+
+<figure><img src="../../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
+<figure><img src="../../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+
+As we can see, we get an error stating that the SELECT statements have different number of columns. Hence, for the UNION based SQL injection attack to work, we will need equal number of columns to be returned by both queries.&#x20;
 
 Thus, the UNION operator can be used in a broader SQLi attack known as <mark style="color:yellow;">SQLi UNION</mark> attacks.  However, things to keep in mind is that _<mark style="color:yellow;">**UNION Injection attacks are only possible in the case of a SELECT statement**</mark>_ (such as a request to retrieve some data). It is not possible to use UNION payloads for INSERT/UPDATE/DELETE statements, since UNION is defined in SQL as the means to combine result sets from SELECT queries.&#x20;
 

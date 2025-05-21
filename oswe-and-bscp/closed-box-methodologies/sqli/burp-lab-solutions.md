@@ -10,7 +10,7 @@ description: Burp Lab Solutions with walkthrough and understanding
 
 Lab description mentions that the vulnerability lies in the "category" parameter, as the user can select products from different categories.&#x20;
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption><p>The vulnerable application</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption><p>The vulnerable application</p></figcaption></figure>
 
 The vulnerable request looks like:&#x20;
 
@@ -22,7 +22,7 @@ The backend SQL query may look something like:
 
 Now, what if we enter a ' after Gifts to see what happens
 
-<figure><img src="../../../.gitbook/assets/image (2) (1).png" alt=""><figcaption><p>We get a 500 ISE. Interesting!</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption><p>We get a 500 ISE. Interesting!</p></figcaption></figure>
 
 So now, what if we enter <mark style="color:yellow;">`' AND 1=1--`</mark>, so that request (after URL encoding) looks like:
 
