@@ -5,3 +5,4 @@
     * [SQLi](oswe-and-bscp/closed-box-methodologies/sqli/README.md)
       * [Burp Lab Solutions](oswe-and-bscp/closed-box-methodologies/sqli/burp-lab-solutions.md)
       * [SQLi Methodology](oswe-and-bscp/closed-box-methodologies/sqli/sqli-methodology.md)
+  * [Using the HTTPX library](oswe-and-bscp/using-the-httpx-library.md)

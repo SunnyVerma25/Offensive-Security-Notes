@@ -10,7 +10,7 @@ description: Burp Lab Solutions with walkthrough and understanding
 
 Lab description mentions that the vulnerability lies in the "category" parameter, as the user can select products from different categories.&#x20;
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption><p>The vulnerable application</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt=""><figcaption><p>The vulnerable application</p></figcaption></figure>
 
 The vulnerable request looks like:&#x20;
 
@@ -22,7 +22,7 @@ The backend SQL query may look something like:
 
 Now, what if we enter a ' after Gifts to see what happens
 
-<figure><img src="../../../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption><p>We get a 500 ISE. Interesting!</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1).png" alt=""><figcaption><p>We get a 500 ISE. Interesting!</p></figcaption></figure>
 
 So now, what if we enter <mark style="color:yellow;">`' AND 1=1--`</mark>, so that request (after URL encoding) looks like:
 
@@ -30,7 +30,7 @@ So now, what if we enter <mark style="color:yellow;">`' AND 1=1--`</mark>, so th
 
 We get an extra product returned back to us!! (The hidden product)
 
-<figure><img src="../../../.gitbook/assets/image (3).png" alt=""><figcaption><p>The Conversation Controlling Lemon is an unreleased product, but now is visible to us, thanks to the SQLi</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (3) (1).png" alt=""><figcaption><p>The Conversation Controlling Lemon is an unreleased product, but now is visible to us, thanks to the SQLi</p></figcaption></figure>
 
 Now, the AND operator will ensure that only the released and unreleased items in the GIFT category are returned, as the SQL query will look like the following, effectively commenting out the check for released filter:
 
@@ -40,7 +40,7 @@ If we want to return all products from all categories, whether released or unrel
 
 <mark style="color:yellow;">`SELECT * FROM product WHERE category='Gifts' OR 1=1-- AND released=1`</mark>
 
-<figure><img src="../../../.gitbook/assets/image (6).png" alt=""><figcaption><p><a href="https://0a8c00fb047975cf822f01c2003a00bf.web-security-academy.net/filter?category=Gifts%27+OR+1%3d1--">https://0a8c00fb047975cf822f01c2003a00bf.web-security-academy.net/filter?category=Gifts%27+OR+1%3d1--</a></p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (6) (1).png" alt=""><figcaption><p><a href="https://0a8c00fb047975cf822f01c2003a00bf.web-security-academy.net/filter?category=Gifts%27+OR+1%3d1--">https://0a8c00fb047975cf822f01c2003a00bf.web-security-academy.net/filter?category=Gifts%27+OR+1%3d1--</a></p></figcaption></figure>
 
 ***
 
@@ -60,9 +60,9 @@ However, what happens if the input-data is not sanitized properly, and as a resu
 
 Since we entered the <mark style="color:yellow;">`--`</mark> it will comment out the password check query, and allows us to login as administrator user!&#x20;
 
-<figure><img src="../../../.gitbook/assets/image (8).png" alt=""><figcaption><p>The payload is accepted and the user is redirected to the my-account page</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (8) (1).png" alt=""><figcaption><p>The payload is accepted and the user is redirected to the my-account page</p></figcaption></figure>
 
-<figure><img src="../../../.gitbook/assets/image (9).png" alt=""><figcaption><p>Attacker is logged in as Administrator</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (9) (1).png" alt=""><figcaption><p>Attacker is logged in as Administrator</p></figcaption></figure>
 
 ***
 
