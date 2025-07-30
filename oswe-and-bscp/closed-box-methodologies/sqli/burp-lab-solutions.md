@@ -372,13 +372,17 @@ Piecing these together, the final password string is: hsr2230u20hyug5uneum
 
 ### <mark style="color:yellow;">Blind SQL injection with conditional errors</mark>
 
+Lab description mentions that the lab no longer returns verbose error messages, and that the response of SQLi payloads is also not returned in the application body. However, if for some reason, the SQL query breaks, then it will throw 500 ISE. As such, we will have to query the underlying database in such a manner that if the query we send is technically true (such as first character of the password is the character a), then this query should break, and return 500 ISE. Else, it will keep returning HTTP 200 OK to us.
 
+From the lab: This lab contains a blind SQL injection vulnerability. The application uses a tracking cookie for analytics, and performs a SQL query containing the value of the submitted cookie.
+
+The results of the SQL query are not returned, and the application does not respond any differently based on whether the query returns any rows. If the SQL query causes an error, then the application returns a custom error message.
 
 <figure><img src="../../../.gitbook/assets/image (110).png" alt=""><figcaption><p>Start of the lab</p></figcaption></figure>
 
 <figure><img src="../../../.gitbook/assets/image (111).png" alt=""><figcaption><p>500 ISE returned when a single-quote is injected in the cookie</p></figcaption></figure>
 
-<figure><img src="../../../.gitbook/assets/image (112).png" alt=""><figcaption><p>200 OK when two single-quote characters are injected, thereby indicating the presence of a SQLi</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (112).png" alt=""><figcaption><p>200 OK when two single-quote characters are injected, thereby indicating the presence of a possible SQLi</p></figcaption></figure>
 
 <figure><img src="../../../.gitbook/assets/image (113).png" alt=""><figcaption><p>Injecting ' AND '1'='1 returns the as-expected response</p></figcaption></figure>
 
@@ -394,5 +398,63 @@ To confirm that the tracking cookie parameter is vulnerable to SQLi, we use the 
 
 <figure><img src="../../../.gitbook/assets/image (117).png" alt=""><figcaption><p>When requesting information from a table that does not exist (dualsff), the SQL server will return an error, which will break the SQL query, hence return the 500 ISE</p></figcaption></figure>
 
-So now, we need to use queries that can make the SQL server return an unexpected response, which could lead to SQLi being exploited
+So now, we need to use queries that can make the SQL server return an unexpected response, which could lead to SQLi being exploited (modify the query so that it causes a database error only if the condition is true)
+
+We can first confirm that the users table exists:
+
+<mark style="color:yellow;">`'||(SELECT '' FROM users WHERE rownum=1)||'`</mark>&#x20;
+
+Explanation of payload is that check for the users table. If it exists, where there's at least 1 row, select NULL, and append it to cookie. Hence, we get 200 OK.&#x20;
+
+<figure><img src="../../../.gitbook/assets/image (138).png" alt=""><figcaption></figcaption></figure>
+
+But if we modify the users table to some other value, we get 500 ISE, because the usersasd table does not exist.&#x20;
+
+<figure><img src="../../../.gitbook/assets/image (139).png" alt=""><figcaption></figcaption></figure>
+
+Now, we confirmed that the users table exists, so time to check that the administrator user exists. The idea is that we will want to intentionally trigger an error in SQL if the user exists. If the user does not exists, then our intentional error will not trigger, and as such, we will know that the user does not exist.&#x20;
+
+To do so, we will use the following payload:
+
+<mark style="color:yellow;">`' || (SELECT TO_CHAR(1/0) FROM users WHERE username='administrator') || '`</mark>
+
+<figure><img src="../../../.gitbook/assets/image (140).png" alt=""><figcaption></figcaption></figure>
+
+The response we get is 500 ISE, which indicates the presence of the administrator user. The reason why we get 500 is explained as follows:&#x20;
+
+The payload: <mark style="color:yellow;">`' || (SELECT TO_CHAR(1/0) FROM users WHERE username='administrator') || '`</mark>
+
+First check is done to confirm if the users table exist. Since we already confirmed that users table exists, we move onto next stage. If users table did not exist, then SQL would have thrown 500 ISE at this stage itself, and we would have no idea if the 500 we got is because of our intentional payload of 1/0, or because the users table does not exist.&#x20;
+
+Second check is that SQL checks that if the username administrator exists, and returns a row? If there's a row that's returned, then the SELECT operation is executed on it.&#x20;
+
+However, if the administrator user does not exist, then there will be no row returned. As such, there's no row for the SELECT operation to be executed on, and we would get 200 OK as a response (since there will be NULL that will be concatenated to the original cookie payload.&#x20;
+
+<figure><img src="../../../.gitbook/assets/image (142).png" alt=""><figcaption></figcaption></figure>
+
+Now, if we wish to find the password (assuming length of password is 20, or we can confirm it by using the payload <mark style="color:yellow;">`' || (SELECT TO_CHAR(1/0) FROM users WHERE username='administrator' AND LENGTH(password) = 20) || '`</mark> , we can do so using the following payload:&#x20;
+
+<mark style="color:yellow;">`' || (SELECT TO_CHAR(1/0) FROM users WHERE username = 'administrator' AND SUBSTR(password,1,1) = 'a') || '`</mark>
+
+Now, if we run this payload, we get a 200 OK, which indicates the following:&#x20;
+
+First check: users table exists, so we move to next round of execution
+
+Second check: we check the where clause to see if the administrator user exists AND whether the first character of the password is the letter 'a'. Since we confirmed the presence of the administrator user earlier, that would have returned true. But since we are getting 200 OK, that means that potentially the first character of password is not the alphabet 'a', and we have to check it.&#x20;
+
+We can run the Intruder attack, and guess what? We get a 500 ISE for the letter 'y'.
+
+So now, we know the first letter of the password for the user administrator is the alphabet 'y'. Now, we can run a cluster bomb attack to uncover the remaining 19 characters.&#x20;
+
+<figure><img src="../../../.gitbook/assets/image (143).png" alt=""><figcaption></figcaption></figure>
+
+Running the clusterbomb attack........
+
+<figure><img src="../../../.gitbook/assets/image (144).png" alt=""><figcaption></figcaption></figure>
+
+We are logged in as administrator!
+
+<figure><img src="../../../.gitbook/assets/image (135).png" alt=""><figcaption></figcaption></figure>
+
+<figure><img src="../../../.gitbook/assets/image (145).png" alt=""><figcaption></figcaption></figure>
 

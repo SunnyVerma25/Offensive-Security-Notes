@@ -196,3 +196,37 @@ The way this payload will work is as follows:
 
 <mark style="color:yellow;">`= 'y`</mark> -> Compare the string with the character 'y' to determine if the first character is y. If 'y'='y', then return true, otherwise false.&#x20;
 
+***
+
+### <mark style="color:yellow;">Order of Execution</mark>
+
+Remember the order of execution when creating a SQL payload. If we are using FROM keyword, anything following the FROM keyword will be checked first, before the SELECT statement. For example, here's the order of execution for the following query:&#x20;
+
+<mark style="color:yellow;">`' || SELECT CASE WHEN (1=1) THEN TO_CHAR (1/0) ELSE '' END FROM users WHERE username='administrator' || '`</mark>
+
+In this scenario, once this payload is injected, the SQL backend will first check if the users table exists?&#x20;
+
+Then, it will check if the username administrator exists?&#x20;
+
+Then, it will perform the SELECT query.&#x20;
+
+If the users table does not exist, or the username administrator does not exist, it will ignore the SELECT statement
+
+In this Burp Suite SQLi lab (Lab 12: Blind SQL injection with conditional errors), we have to trigger errors when conditions are true, in order to solve the lab.&#x20;
+
+As such, when we use this payload in the tracking cookie:&#x20;
+
+<mark style="color:yellow;">`7U94e0UetndjeAML' || (SELECT CASE WHEN (1=1) THEN TO_CHAR(1/0) ELSE '' END FROM users WHERE username='administrator') || ';`</mark>
+
+It returns 500 ISE, because here's what happens:
+
+The SQL server checks that the users table exists. Then, it will attempt to execute the query <mark style="color:yellow;">`FROM users WHERE username='administrator'`</mark>. If no row is returned (in the case that administrator user does not exist), then the <mark style="color:yellow;">`CASE`</mark> expression is not evaluated, and no error occurs. Then, it evaluates the condition 1=1, which is true. Since 1=1 is true, it performs the function TO\_CHAR (1/0), which will trigger an error in SQL, and hence we get the 500 ISE.&#x20;
+
+<figure><img src="../../../.gitbook/assets/image (137).png" alt=""><figcaption></figcaption></figure>
+
+However, if we change the payload so that we use another table instead of users table, such as a table that does not exist, that also returns 500 ISE. Why is that?&#x20;
+
+<mark style="color:yellow;">`7U94e0UetndjeAML' || (SELECT CASE WHEN (1=1) THEN TO_CHAR(1/0) ELSE '' END FROM usersafasfafs WHERE username='administrator') || ';`</mark>
+
+This is because when the query FROM usersafasfafs is checked, this table does not exist, thereby returning an error in SQLi backend. Since this error is returned, rest of the query is not checked and 500 ISE is returned. As such, moral of the story is that we use the CASE variables to confirm the presence/denial of password characters to solve the lab.&#x20;
+
