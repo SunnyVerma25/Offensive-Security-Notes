@@ -5,4 +5,4 @@ description: >-
 ---
 
 # OSWE and BSCP
-
+Please refer to sub-folders for notes on different web application vulnerabilities. W.I.P.
