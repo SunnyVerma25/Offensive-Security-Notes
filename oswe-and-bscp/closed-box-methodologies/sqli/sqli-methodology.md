@@ -32,9 +32,9 @@ description: >-
 
 2. **Submit an expression containing SQL methods in it to analyze if the expression is being resolved**: If the above case resolves properly, try injecting a payload that contains a SQL method, and observe if the result is the same. For example, a common SQL method is ASCII(), which can be used to convert the value of the character to it's ASCII value. So, in the below example. we can use the payload 1+ASCII(1) to retrieve the details for the user Clark, since Clark's empId = 50 and ASCII(1)=49.&#x20;
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption><p>The original database</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption><p>The original database</p></figcaption></figure>
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption><p>The empId solves the arithmetic expression involving the SQL ASCII method</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt=""><figcaption><p>The empId solves the arithmetic expression involving the SQL ASCII method</p></figcaption></figure>
 
 ## Edge cases:&#x20;
 
@@ -58,7 +58,7 @@ For blind-sqli, we can use a time-based injection with the following payload:
 
 <mark style="color:yellow;">`(CASE WHEN 1=1 THEN pg_sleep(5) ELSE price END)`</mark>
 
-<figure><img src="../../../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 The query becomes <mark style="color:yellow;">`SELECT name,title,price FROM bookstore WHERE genre = 'Thriller' ORDER BY (CASE WHEN 1=1 THEN pg_sleep(5) ELSE price END)`</mark>&#x20;
 
