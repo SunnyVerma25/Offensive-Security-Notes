@@ -210,7 +210,7 @@ Use the password to log in as administrator, and the lab is solved!
 
 ***
 
-### SQL injection attack, querying the database type and version on MySQL and Microsoft
+### <mark style="color:yellow;">SQL injection attack, querying the database type and version on MySQL and Microsoft</mark>
 
 In previous labs, we have been provided information on the database types, tables and columns names. Now, it's time that we learned how to identify this information ourselves. This lab focusses on identifying the underlying database type, which is crucial information as it will help us build our payloads accordingly to extract sensitive information later on.&#x20;
 
@@ -238,7 +238,7 @@ A hashtag at the end also worked, since MySQL uses # as a way to inform that the
 
 ***
 
-### SQL injection attack, listing the database contents on non-Oracle databases
+### <mark style="color:yellow;">SQL injection attack, listing the database contents on non-Oracle databases</mark>
 
 Same as previous labs, now we need to first identify the table and column names, and then dump the tables to identify the username and password to log in as the user administrator.
 
@@ -284,9 +284,9 @@ Now, we know that the table is users\_uiyxio, the columns are username\_qibzyk a
 
 ***
 
-## SQL injection attack, querying the database type and version on Oracle
+## <mark style="color:yellow;">SQL injection attack, querying the database type and version on Oracle</mark>
 
-Straight-forward solutin as compared to previous labs. The payload used is <mark style="color:yellow;">`'+UNION%20SELECT%20NULL%2cbanner%20FROM%20v%24version--`</mark>
+Straight-forward solution as compared to previous labs. The payload used is <mark style="color:yellow;">`'+UNION%20SELECT%20NULL%2cbanner%20FROM%20v%24version--`</mark>
 
 <figure><img src="../../../.gitbook/assets/image (88).png" alt=""><figcaption><p>Lab is solved!</p></figcaption></figure>
 
@@ -460,7 +460,7 @@ We are logged in as administrator!
 
 ***
 
-### Visible error-based SQL injection
+### <mark style="color:yellow;">Visible error-based SQL injection</mark>
 
 Lab Description: The application uses a tracking cookie for analytics, and performs a SQL query containing the value of the submitted cookie. The results of the SQL query are not returned. The database contains a different table called `users`, with columns called `username` and `password`. To solve the lab, find a way to leak the password for the `administrator` user, then log in to their account.
 
