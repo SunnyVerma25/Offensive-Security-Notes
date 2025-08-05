@@ -531,3 +531,60 @@ Voila! We have a string that's our potential password. Using this string as our 
 <figure><img src="../../../.gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
 
 <figure><img src="../../../.gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
+
+***
+
+### <mark style="color:yellow;">Blind SQL injection with time delays and information retrieval</mark>
+
+From the lab description:&#x20;
+
+`This lab contains a blind SQL injection vulnerability. The application uses a tracking cookie for analytics, and performs a SQL query containing the value of the submitted cookie.The results of the SQL query are not returned, and the application does not respond any differently based on whether the query returns any rows or causes an error. However, since the query is executed synchronously, it is possible to trigger conditional time delays to infer information.The database contains a different table called users, with columns called username and password. You need to exploit the blind SQL injection vulnerability to find out the password of the administrator user.`
+
+So we basically have to check for time-based blind sqli payloads, and then use it to retrieve the password of the administrator user.&#x20;
+
+Starting the lab:
+
+<figure><img src="../../../.gitbook/assets/image (148).png" alt=""><figcaption></figcaption></figure>
+
+Now, because we do not know what kind of underlying database it is, we will have to do a bit of fuzzing to understand which payload will cause the underlying SQL DB to sleep. Looking at the [SQLI cheatsheet](https://portswigger.net/web-security/sql-injection/cheat-sheet), we see that there are payloads for every kind of DB.&#x20;
+
+<figure><img src="../../../.gitbook/assets/image (147).png" alt=""><figcaption></figcaption></figure>
+
+So, to construct the payload, we first have to think what the SQL query may be looking like:&#x20;
+
+<mark style="color:yellow;">`SELECT tracking-id FROM tracking-id-table WHERE tracking-id-cookie='random-value'`</mark>
+
+So, to inject the blind-based SQLi payload, we will have to inject it in the following manner:
+
+<mark style="color:yellow;">`SELECT tracking-id FROM tracking-id-table WHERE tracking-id-cookie='random-value'; SELECT SLEEP(10) --'`</mark>
+
+So, our payload will be: <mark style="color:yellow;">`'; SELECT SLEEP(10) --`</mark>
+
+That did not work....
+
+<figure><img src="../../../.gitbook/assets/image (149).png" alt=""><figcaption></figcaption></figure>
+
+Trying the PostgreSQL payload: <mark style="color:yellow;">`'; SELECT pg_sleep(10) --`</mark> ....
+
+It worked!
+
+<figure><img src="../../../.gitbook/assets/image (150).png" alt=""><figcaption></figcaption></figure>
+
+So, now we know that the TrackingId cookie is vulnerable, and that the DBS is PostgreSQL. So now, we will use the conditional payloads to extract information about the underlying users:
+
+Looking at cheat sheet again, we can construct our conditional payload as follows:
+
+<mark style="color:yellow;">`'; SELECT CASE WHEN (1=1) THEN pg_sleep(10) ELSE pg_sleep(-1) END --`</mark>
+
+We get the DBS to sleep for 10 seconds in the true condition
+
+<figure><img src="../../../.gitbook/assets/image (151).png" alt=""><figcaption></figcaption></figure>
+
+Now, trying with the false condition payload:
+
+<mark style="color:yellow;">`'; SELECT CASE WHEN (1=0) THEN pg_sleep(10) ELSE pg_sleep(-1) END --`</mark>
+
+DBS does not sleep under false condition
+
+<figure><img src="../../../.gitbook/assets/image (153).png" alt=""><figcaption></figcaption></figure>
+
