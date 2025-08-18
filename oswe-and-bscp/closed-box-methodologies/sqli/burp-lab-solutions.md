@@ -588,3 +588,18 @@ DBS does not sleep under false condition
 
 <figure><img src="../../../.gitbook/assets/image (153).png" alt=""><figcaption></figcaption></figure>
 
+Now that we have proved that the cookie is vulnerable to Blind SQLi, time for exfiltration. We will not show the efforts to confirm that the users table exists, or the administrator user exists with a password length of 20 characters.&#x20;
+
+Rather, here is the payload that can be used to confirm the first character of the password is the character 't':&#x20;
+
+<mark style="color:yellow;">`'; SELECT CASE WHEN(SUBSTRING(password,1,1) = 't') THEN pg_sleep(15) ELSE pg_sleep(-1) END FROM users WHERE username='administrator'--`</mark>
+
+<figure><img src="../../../.gitbook/assets/image (154).png" alt=""><figcaption></figcaption></figure>
+
+Launching our cluster bomb attack...
+
+<figure><img src="../../../.gitbook/assets/image (155).png" alt=""><figcaption></figcaption></figure>
+
+Lab is solved!
+
+<figure><img src="../../../.gitbook/assets/image (156).png" alt=""><figcaption></figcaption></figure>
