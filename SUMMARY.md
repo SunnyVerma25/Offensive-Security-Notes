@@ -7,4 +7,6 @@
       * [SQLi Methodology](oswe-and-bscp/closed-box-methodologies/sqli/sqli-methodology.md)
       * [Automated Exploits](oswe-and-bscp/closed-box-methodologies/sqli/automated-exploits.md)
     * [Insecure Deserialization](readme/closed-box-methodologies/insecure-deserialization.md)
+    * [HTTP Request Smuggling](readme/closed-box-methodologies/http-request-smuggling/README.md)
+      * [Burp Lab Solutions](readme/closed-box-methodologies/http-request-smuggling/burp-lab-solutions.md)
   * [Using the HTTPX library](oswe-and-bscp/using-the-httpx-library.md)
