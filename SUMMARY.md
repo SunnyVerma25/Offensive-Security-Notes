@@ -14,6 +14,8 @@
         * [Burp Lab Solutions](readme/closed-box-methodologies/xss/reflected-xss/burp-lab-solutions.md)
       * [Stored XSS](readme/closed-box-methodologies/xss/stored-xss/README.md)
         * [Burp Lab Solutions](readme/closed-box-methodologies/xss/stored-xss/burp-lab-solutions.md)
+      * [DOM XSS](readme/closed-box-methodologies/xss/dom-xss/README.md)
+        * [Burp Lab Solutions](readme/closed-box-methodologies/xss/dom-xss/burp-lab-solutions.md)
   * [Using the HTTPX library](oswe-and-bscp/using-the-httpx-library.md)
   * [Regex!!](readme/regex/README.md)
     * [What is Regex?](readme/regex/what-is-regex.md)

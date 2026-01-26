@@ -10,7 +10,7 @@ description: Burp Lab Solutions with walkthrough and understanding
 
 Lab description mentions that the vulnerability lies in the "category" parameter, as the user can select products from different categories.&#x20;
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>The vulnerable application</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>The vulnerable application</p></figcaption></figure>
 
 The vulnerable request looks like:&#x20;
 
@@ -22,7 +22,7 @@ The backend SQL query may look something like:
 
 Now, what if we enter a ' after Gifts to see what happens
 
-<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>We get a 500 ISE. Interesting!</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>We get a 500 ISE. Interesting!</p></figcaption></figure>
 
 So now, what if we enter <mark style="color:yellow;">`' AND 1=1--`</mark>, so that request (after URL encoding) looks like:
 
@@ -30,7 +30,7 @@ So now, what if we enter <mark style="color:yellow;">`' AND 1=1--`</mark>, so th
 
 We get an extra product returned back to us!! (The hidden product)
 
-<figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1).png" alt=""><figcaption><p>The Conversation Controlling Lemon is an unreleased product, but now is visible to us, thanks to the SQLi</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1) (1).png" alt=""><figcaption><p>The Conversation Controlling Lemon is an unreleased product, but now is visible to us, thanks to the SQLi</p></figcaption></figure>
 
 Now, the AND operator will ensure that only the released and unreleased items in the GIFT category are returned, as the SQL query will look like the following, effectively commenting out the check for released filter:
 
@@ -470,17 +470,17 @@ So, we start the lab:
 
 Now, inject a 'single-quote' character into the TrackingId cookie value
 
-<figure><img src="../../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Voila, we see the whole SQL query being returned by us, allowing us to understand what's happening in the back-end, including what SQL query is being executed on the database.&#x20;
 
 A quick search shows us what the error is:&#x20;
 
-<figure><img src="../../../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 which is fixed when we inject another single-quote in the payload, thereby completing the query, and hence we see the normal behavior of the application.&#x20;
 
-<figure><img src="../../../.gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (3) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 So we confirmed that there's a SQL injection in the WHERE clause of the query
 
@@ -490,7 +490,7 @@ Using the payload:
 
 <mark style="color:yellow;">`EKNzzxKB3L5yrR0I' AND CAST((SELECT '' FROM users) AS int)--`</mark>
 
-<figure><img src="../../../.gitbook/assets/image (4) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (4) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 The error returned (argument of AND must be type boolean, not type integer) tells us that whatever follows the AND keyword must be in boolean format (true or false). As such, we can add any number with equal-to sign to ensure a comparison happens (and as such, the response is boolean).&#x20;
 
@@ -500,7 +500,7 @@ Using the payload:
 
 gives us another error, but note that the query is being truncated.&#x20;
 
-<figure><img src="../../../.gitbook/assets/image (5) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (5) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 As such, we can remove the cookie value to make space. Using the payload:
 

@@ -36,9 +36,9 @@ In order to do so, regex provides the usage of metacharacters/special characters
 
 So, if use a regex like `\bcomputer\b`, it is basically looking for the exact occurrence of the computer word in the text. It does not take into account words like `supercomputer` (no space between r and c, so regex fails), or `computerx`(again, no space between r and x, and hence regex fails).&#x20;
 
-<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 #### Anchor - Starts with
 
@@ -56,9 +56,9 @@ In this case, we will write the following regex: `^https:\/\/`
 
 This makes sure that the input supplied begins with https. You'll also note that the forward slashes `/` need to be escaped with a backslash `\` first to keep the regex valid.
 
-<figure><img src="../../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
 
-<figure><img src="../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
 
 #### Anchor - Ends with
 
@@ -72,9 +72,9 @@ To do so, the regex will look like: `@challenge\.ctf$`
 
 Now, the `$` makes sure that the input provided matches the pattern `@challenge.ctf`. The forward slash is important in our scenario, because the `.` character means `literally everything (all characters)` in regex. So if we forget to escape the `.` using the forward slash (which developers do sometimes), it can allow someone to enter a value like `test@challengexctf`, and it will a value that is accepted by the application (thereby, introducing a possible vulnerability).&#x20;
 
-<figure><img src="../../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (4) (1).png" alt=""><figcaption></figcaption></figure>
 
-<figure><img src="../../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (5) (1).png" alt=""><figcaption></figcaption></figure>
 
 #### Character Sets
 

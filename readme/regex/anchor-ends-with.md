@@ -10,6 +10,6 @@ To do so, the regex will look like: `@challenge\.ctf$`
 
 Now, the `$` makes sure that the input provided matches the pattern `@challenge.ctf`. The forward slash is important in our scenario, because the `.` character means `literally everything (all characters)` in regex. So if we forget to escape the `.` using the forward slash (which developers do sometimes), it can allow someone to enter a value like `test@challengexctf`, and it will a value that is accepted by the application (thereby, introducing a possible vulnerability).&#x20;
 
-<figure><img src="../../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (4) (1).png" alt=""><figcaption></figcaption></figure>
 
-<figure><img src="../../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (5) (1).png" alt=""><figcaption></figcaption></figure>

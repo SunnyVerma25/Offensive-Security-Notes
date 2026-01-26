@@ -6,6 +6,6 @@ In order to do so, regex provides the usage of metacharacters/special characters
 
 So, if use a regex like `\bcomputer\b`, it is basically looking for the exact occurrence of the computer word in the text. It does not take into account words like `supercomputer` (no space between r and c, so regex fails), or `computerx`(again, no space between r and x, and hence regex fails).&#x20;
 
-<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
