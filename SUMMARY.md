@@ -26,3 +26,5 @@
     * [Character Sets](readme/regex/character-sets.md)
   * [Web concepts and functions](readme/web-concepts-and-functions/README.md)
     * [HTML Entities and htmlentities() in PHP](readme/web-concepts-and-functions/html-entities-and-htmlentities-in-php.md)
+  * [WAF Bypasses](readme/waf-bypasses/README.md)
+    * [.. -> %c0%2e](readme/waf-bypasses/..-greater-than-c0-2e.md)

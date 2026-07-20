@@ -74,7 +74,7 @@ Then, when we make the GET call using httpx.get method, we pass this 'vuln\_para
 
 And here's the response:
 
-<figure><img src="../.gitbook/assets/image (2) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 We can see in the response that the server confirmed that it got 2 args (key and key2), and we can also see the URL shows that the call was made to [https://httpbin.org/get?key=value1\&key2=value2](https://httpbin.org/get?key=value1\&key2=value2)
 

@@ -10,7 +10,7 @@ description: Burp Lab Solutions with walkthrough and understanding
 
 Lab description mentions that the vulnerability lies in the "category" parameter, as the user can select products from different categories.&#x20;
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>The vulnerable application</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>The vulnerable application</p></figcaption></figure>
 
 The vulnerable request looks like:&#x20;
 
@@ -22,7 +22,7 @@ The backend SQL query may look something like:
 
 Now, what if we enter a ' after Gifts to see what happens
 
-<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>We get a 500 ISE. Interesting!</p></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>We get a 500 ISE. Interesting!</p></figcaption></figure>
 
 So now, what if we enter <mark style="color:yellow;">`' AND 1=1--`</mark>, so that request (after URL encoding) looks like:
 
@@ -470,13 +470,13 @@ So, we start the lab:
 
 Now, inject a 'single-quote' character into the TrackingId cookie value
 
-<figure><img src="../../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Voila, we see the whole SQL query being returned by us, allowing us to understand what's happening in the back-end, including what SQL query is being executed on the database.&#x20;
 
 A quick search shows us what the error is:&#x20;
 
-<figure><img src="../../../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 which is fixed when we inject another single-quote in the payload, thereby completing the query, and hence we see the normal behavior of the application.&#x20;
 

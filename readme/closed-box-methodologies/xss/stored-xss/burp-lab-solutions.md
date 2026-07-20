@@ -6,13 +6,13 @@ The lab tells us that there's a stored cross-site scripting vulnerability in the
 
 So, if we add this comment to the post (with the website value also containing https://), we see the following response from the server when we reload the post.&#x20;
 
-<figure><img src="../../../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
 
-<figure><img src="../../../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 It's clear that the comment that was posted contains tags that are not being encoded properly. So we can trigger the alert from the comment column.
 
-<figure><img src="../../../../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 When we reload the posts, we can see that the we were successfully able to escape the \<p> tag, and trigger our XSS payload
 

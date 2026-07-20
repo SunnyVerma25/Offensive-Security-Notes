@@ -38,7 +38,7 @@ So, if use a regex like `\bcomputer\b`, it is basically looking for the exact oc
 
 <figure><img src="../../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
 
-<figure><img src="../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 #### Anchor - Starts with
 
@@ -56,7 +56,7 @@ In this case, we will write the following regex: `^https:\/\/`
 
 This makes sure that the input supplied begins with https. You'll also note that the forward slashes `/` need to be escaped with a backslash `\` first to keep the regex valid.
 
-<figure><img src="../../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 <figure><img src="../../.gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
 

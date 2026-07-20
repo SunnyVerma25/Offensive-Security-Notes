@@ -14,6 +14,6 @@ In this case, we will write the following regex: `^https:\/\/`
 
 This makes sure that the input supplied begins with https. You'll also note that the forward slashes `/` need to be escaped with a backslash `\` first to keep the regex valid.
 
-<figure><img src="../../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 <figure><img src="../../.gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
